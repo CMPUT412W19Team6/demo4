@@ -1,0 +1,134 @@
+<launch>
+    <arg name="base"       default="$(optenv TURTLEBOT_BASE kobuki)"/>  <!-- create, rhoomba -->
+    <arg name="stacks"     default="$(optenv TURTLEBOT_STACKS hexagons)"/>  <!-- circles, hexagons -->
+    <arg name="3d_sensor"  default="$(optenv TURTLEBOT_3D_SENSOR kinect)"/>  <!-- kinect, asus_xtion_pro -->
+    
+    <arg name="map_file"       default="$(find demo4)/maps/maze.yaml"/> <!-- robopark_plan -->
+    <arg name="world_file"     default="$(find demo4)/maps/stage/maze.world"/>
+    <arg name="initial_pose_x" default="2.0"/>
+    <arg name="initial_pose_y" default="2.0"/>
+    <arg name="initial_pose_a" default="0.0"/>
+
+    <arg name="mapping" default="false"/>
+
+    <param name="/use_sim_time" value="true"/>
+
+    <!-- <include file="$(find demo4)/launch/misc/custom_turtlebot_world.launch">
+        <arg name="gazebo_tf_prefix" value="gazebo"/>
+        <arg name="world_file" value="$(find demo4)/simulation/world.sdf"/>
+        <arg name="x" value="-4"/>
+        <arg name="y" value="-5"/>
+        <arg name="z" value="0.1"/>
+    </include> -->
+
+    <!-- <include file="$(find demo4)/launch/misc/turtlebot_in_stage.launch">
+        <arg name="map_file" value="$(find demo4)/maps/maze.yaml"/>
+        <arg name="world_file" value="$(find demo4)/maps/stage/maze.world"/>
+    </include> -->
+
+    <!--  ******************** Stage ********************  -->
+    <!-- 
+            Publishes transforms:
+            /base_link -> /base_laser
+            /base_footprint -> /base_link (identity)
+            /odom -> base_footprint
+            Publishes topics:
+            /odom : odometry data from the simulated odometry
+            /base_scan : laser data from the simulated laser
+            /base_pose_ground_truth : the ground truth pose
+            Parameters:
+            base_watchdog_timeout : time (s) after receiving the last command on cmd_vel before stopping the robot
+            Args:
+            -g : run in headless mode.
+    --> 
+    <node pkg="stage_ros" type="stageros" name="stageros" args="$(arg world_file)">
+        <param name="base_watchdog_timeout" value="0.5"/>
+        <remap from="base_pose_ground_truth" to="base_pose_ground_truth"/>
+        <remap from="cmd_vel" to="cmd_vel_mux/input/teleop"/>
+        <remap from="base_scan" to="scan"/>
+    </node>
+
+    <!--  ***************** Robot Model *****************  -->
+    <include file="$(find turtlebot_bringup)/launch/includes/robot.launch.xml">
+        <arg name="base" value="$(arg base)" />
+        <arg name="stacks" value="$(arg stacks)" />
+        <arg name="3d_sensor" value="$(arg 3d_sensor)" />
+    </include>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <param name="use_gui" value="false"/>
+    </node>
+
+    <!--  ****** Maps *****  -->
+    <group if="$(eval not mapping)">
+        <include file="$(find turtlebot_navigation)/launch/includes/amcl/amcl.launch.xml" >
+            <arg name="scan_topic" value="scan"/>
+            <arg name="use_map_topic" value="true"/>
+            <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
+            <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
+            <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
+        </include>
+
+        <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
+            <param name="frame_id" value="/map"/>
+        </node>
+    </group>
+
+    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen" if="$(eval mapping)">
+        <param name="odom_frame" value="odom"/>
+        <param name="map_update_interval" value="2.0"/>
+        <param name="maxUrange" value="6.0"/>
+        <param name="sigma" value="0.05"/>
+        <param name="kernelSize" value="1"/>
+        <param name="lstep" value="0.05"/>
+        <param name="astep" value="0.05"/>
+        <param name="iterations" value="5"/>
+        <param name="lsigma" value="0.075"/>
+        <param name="ogain" value="3.0"/>
+        <param name="lskip" value="10"/>
+        <param name="srr" value="0.01"/>
+        <param name="srt" value="0.02"/>
+        <param name="str" value="0.01"/>
+        <param name="stt" value="0.02"/>
+        <param name="linearUpdate" value="0.1"/>     <!-- param name="linearUpdate" value="0.5"/-->
+        <param name="angularUpdate" value="0.1"/>   <!--param name="angularUpdate" value="0.436"/-->
+        <param name="temporalUpdate" value="-1.0"/>
+        <param name="resampleThreshold" value="0.5"/>
+        <param name="particles" value="300"/>
+        <param name="xmin" value="-10.0"/>
+        <param name="ymin" value="-10.0"/>
+        <param name="xmax" value="10.0"/>
+        <param name="ymax" value="10.0"/>
+        <param name="delta" value="0.05"/>
+        <param name="llsamplerange" value="0.01"/>
+        <param name="llsamplestep" value="0.01"/>
+        <param name="lasamplerange" value="0.005"/>
+        <param name="lasamplestep" value="0.005"/>
+    </node>
+
+    <!-- Move base -->
+
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <rosparam file="$(find demo4)/param/costmap_common_params.yaml" command="load" ns="global_costmap"/>
+        <rosparam file="$(find demo4)/param/costmap_common_params.yaml" command="load" ns="local_costmap"/>
+        <rosparam file="$(find demo4)/param/local_costmap_params.yaml" command="load"/>
+        <rosparam file="$(find demo4)/param/global_costmap_params.yaml" command="load"/>
+        <rosparam file="$(find demo4)/param/base_local_planner_params.yaml" command="load"/>
+        <rosparam file="$(find demo4)/param/global_planner_params.yaml" command="load"/>
+        <rosparam file="$(find demo4)/param/move_base_params.yaml" command="load"/>
+        <rosparam file="$(find demo4)/param/navfn_global_planner_params.yaml" command="load"/>
+        <remap from="cmd_vel" to="cmd_vel_mux/input/teleop"/>
+	</node>
+
+    
+    <!-- <arg name="custom_param_file" default="$(find turtlebot_navigation)/param/$(arg 3d_sensor)_costmap_params.yaml"/>
+    <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml">
+        <arg name="custom_param_file" value="$(arg custom_param_file)"/>
+    </include> -->
+    
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find demo4)/simulation/world.rviz"/>
+
+    <!-- <include file="$(find demo4)/launch/misc/keyboard_teleop.launch"/> -->
+    <include file="$(find demo4)/launch/misc/logitech.launch"/>
+
+    <node pkg="demo4" type="goal_publisher.py" name="goal_publisher" output="screen" if="$(eval not mapping)"/>
+</launch>
