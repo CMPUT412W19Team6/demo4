@@ -11,7 +11,7 @@
     <include file="$(find demo4)/launch/misc/logitech.launch"/>
 
     <group if="$(eval not mapping)">
-        <include file="$(find turtlebot_navigation)/launch/includes/amcl/amcl.launch.xml" >
+        <include file="$(find demo4)/launch/misc/amcl.launch.xml">
             <arg name="scan_topic" value="scan"/>
             <arg name="use_map_topic" value="true"/>
             <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
