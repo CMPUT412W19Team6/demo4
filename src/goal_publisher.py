@@ -36,7 +36,7 @@ def joy_callback(msg):
         goal.target_pose.header.stamp = rospy.Time.now()
 
         client.send_goal(goal)
-    elif msg.buttons[2] == 1:  # button Y
+    elif msg.buttons[3] == 1:  # button Y
         goal = goal_dict["Y"]
         goal.target_pose.header.stamp = rospy.Time.now()
 
@@ -48,43 +48,43 @@ if __name__ == "__main__":
 
     goal1 = MoveBaseGoal()
     goal1.target_pose.header.frame_id = "map"
-    goal1.target_pose.pose.position.x = 2.85780046115
-    goal1.target_pose.pose.position.y = 3.33461611734
+    goal1.target_pose.pose.position.x = 2.1849
+    goal1.target_pose.pose.position.y = 0.3022
     goal1.target_pose.pose.position.z = 0.0
     goal1.target_pose.pose.orientation.x = 0.0
     goal1.target_pose.pose.orientation.y = 0.0
-    goal1.target_pose.pose.orientation.z = -0.706489444944
-    goal1.target_pose.pose.orientation.w = 0.707723578937
+    goal1.target_pose.pose.orientation.z = 0.4839
+    goal1.target_pose.pose.orientation.w = 0.875
 
     goal2 = MoveBaseGoal()
     goal2.target_pose.header.frame_id = "map"
-    goal2.target_pose.pose.position.x = 4.62429458697
-    goal2.target_pose.pose.position.y = 2.14827792834
+    goal2.target_pose.pose.position.x = 2.6834
+    goal2.target_pose.pose.position.y = -1.9112
     goal2.target_pose.pose.position.z = 0.0
     goal2.target_pose.pose.orientation.x = 0.0
     goal2.target_pose.pose.orientation.y = 0.0
-    goal2.target_pose.pose.orientation.z = -0.727832603828
-    goal2.target_pose.pose.orientation.w = 0.685754840162
+    goal2.target_pose.pose.orientation.z = -0.2742
+    goal2.target_pose.pose.orientation.w = 0.9616
 
     goal3 = MoveBaseGoal()
     goal3.target_pose.header.frame_id = "map"
-    goal3.target_pose.pose.position.x = 3.1799881838
-    goal3.target_pose.pose.position.y = 1.15643320677
+    goal3.target_pose.pose.position.x = 4.0847
+    goal3.target_pose.pose.position.y = -2.5276
     goal3.target_pose.pose.position.z = 0.0
     goal3.target_pose.pose.orientation.x = 0.0
     goal3.target_pose.pose.orientation.y = 0.0
-    goal3.target_pose.pose.orientation.z = -0.985318641925
-    goal3.target_pose.pose.orientation.w = 0.17072543418
+    goal3.target_pose.pose.orientation.z = -0.2448
+    goal3.target_pose.pose.orientation.w = 0.9695
 
     goal4 = MoveBaseGoal()
     goal4.target_pose.header.frame_id = "map"
-    goal4.target_pose.pose.position.x = 4.39842273542
-    goal4.target_pose.pose.position.y = 0.248438570084
+    goal4.target_pose.pose.position.x = 4.0810
+    goal4.target_pose.pose.position.y = -0.7428
     goal4.target_pose.pose.position.z = 0.0
     goal4.target_pose.pose.orientation.x = 0.0
     goal4.target_pose.pose.orientation.y = 0.0
-    goal4.target_pose.pose.orientation.z = 0.986414925415
-    goal4.target_pose.pose.orientation.w = 0.164272928135
+    goal4.target_pose.pose.orientation.z = -0.4553
+    goal4.target_pose.pose.orientation.w = 0.8902
 
     goal_dict = {
         "A": goal1,

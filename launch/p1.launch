@@ -3,13 +3,13 @@
     <arg name="stacks"     default="$(optenv TURTLEBOT_STACKS hexagons)"/>  <!-- circles, hexagons -->
     <arg name="3d_sensor"  default="$(optenv TURTLEBOT_3D_SENSOR kinect)"/>  <!-- kinect, asus_xtion_pro -->
     
-    <arg name="map_file"       default="$(find demo4)/maps/229.yaml"/> <!-- robopark_plan -->
-    <arg name="world_file"     default="$(find demo4)/maps/stage/229.world"/>
-    <arg name="initial_pose_x" default="-1.0132747494"/>
-    <arg name="initial_pose_y" default="-2.59178099819"/>
+    <arg name="map_file"       default="$(find demo4)/maps/maze.yaml"/> <!-- robopark_plan -->
+    <arg name="world_file"     default="$(find demo4)/maps/stage/maze.world"/>
+    <arg name="initial_pose_x" default="2.0"/>
+    <arg name="initial_pose_y" default="2.0"/>
     <arg name="initial_pose_a" default="0.0"/>
 
-    <arg name="mapping" default="false"/>
+    <arg name="mapping" default="true"/>
 
     <param name="/use_sim_time" value="true"/>
 
@@ -75,25 +75,26 @@
 
     <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen" if="$(eval mapping)">
         <param name="odom_frame" value="odom"/>
-        <param name="map_update_interval" value="2.0"/>
-        <param name="maxUrange" value="6.0"/>
+        <param name="map_update_interval" value="1.0"/>
+        <param name="maxUrange" value="3.0"/>
         <param name="sigma" value="0.05"/>
-        <param name="kernelSize" value="1"/>
+        <param name="kernelSize" value="5"/>
         <param name="lstep" value="0.05"/>
         <param name="astep" value="0.05"/>
         <param name="iterations" value="5"/>
         <param name="lsigma" value="0.075"/>
         <param name="ogain" value="3.0"/>
         <param name="lskip" value="10"/>
+        <param name="minimumScore" value="100"/>
         <param name="srr" value="0.01"/>
         <param name="srt" value="0.02"/>
         <param name="str" value="0.01"/>
         <param name="stt" value="0.02"/>
-        <param name="linearUpdate" value="0.1"/>     <!-- param name="linearUpdate" value="0.5"/-->
-        <param name="angularUpdate" value="0.1"/>   <!--param name="angularUpdate" value="0.436"/-->
+        <param name="linearUpdate" value="0.1"/>
+        <param name="angularUpdate" value="0.1"/>
         <param name="temporalUpdate" value="-1.0"/>
         <param name="resampleThreshold" value="0.5"/>
-        <param name="particles" value="300"/>
+        <param name="particles" value="30"/>
         <param name="xmin" value="-10.0"/>
         <param name="ymin" value="-10.0"/>
         <param name="xmax" value="10.0"/>

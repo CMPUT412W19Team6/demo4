@@ -17,8 +17,8 @@ local_costmap:
 
     local_inflation_layer:
         enabled: true
-        cost_scaling_factor: 10.0 # exponential rate at which the obstacle cost drops off (default: 10)
-        inflation_radius: 0.05 # max. distance from an obstacle at which costs are incurred for planning paths.
+        cost_scaling_factor: 3.0 # exponential rate at which the obstacle cost drops off (default: 10)
+        inflation_radius: 0.01 # max. distance from an obstacle at which costs are incurred for planning paths.
 
     obstacle_layer:
         enabled: true
@@ -41,8 +41,8 @@ local_costmap:
             clearing: true
             max_obstacle_height: 2.0
             min_obstacle_height: 0.0
-            obstacle_range: 2.5
-            raytrace_range: 3.0
+            obstacle_range: 3.0
+            raytrace_range: 3.5
             inf_is_valid: true #Allows for Inf values in "LaserScan" observation messages. The Inf values are converted to the laser maximum range.
         bump:
             data_type: PointCloud2
