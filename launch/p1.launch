@@ -9,7 +9,7 @@
     <arg name="initial_pose_y" default="2.0"/>
     <arg name="initial_pose_a" default="0.0"/>
 
-    <arg name="mapping" default="true"/>
+    <arg name="mapping" default="false"/>
 
     <param name="/use_sim_time" value="true"/>
 
@@ -60,7 +60,7 @@
 
     <!--  ****** Maps *****  -->
     <group if="$(eval not mapping)">
-        <include file="$(find turtlebot_navigation)/launch/includes/amcl/amcl.launch.xml" >
+        <include file="$(find demo4)/launch/misc/includes/amcl.launch.xml" >
             <arg name="scan_topic" value="scan"/>
             <arg name="use_map_topic" value="true"/>
             <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>

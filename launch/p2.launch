@@ -1,5 +1,5 @@
 <launch>
-    <arg name="mapping" default="false"/>
+    <arg name="mapping" default="true"/>
     <arg name="map_file"       default="$(find demo4)/maps/529.yaml"/>
     <arg name="initial_pose_x" default="0.0"/>
     <arg name="initial_pose_y" default="0.0"/>
@@ -11,7 +11,7 @@
     <include file="$(find demo4)/launch/misc/logitech.launch"/>
 
     <group if="$(eval not mapping)">
-        <include file="$(find turtlebot_navigation)/launch/includes/amcl/amcl.launch.xml" >
+        <include file="$(find demo4)/launch/misc/includes/amcl.launch.xml" >
             <arg name="scan_topic" value="scan"/>
             <arg name="use_map_topic" value="true"/>
             <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
