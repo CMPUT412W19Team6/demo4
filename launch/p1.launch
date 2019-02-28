@@ -3,10 +3,10 @@
     <arg name="stacks"     default="$(optenv TURTLEBOT_STACKS hexagons)"/>  <!-- circles, hexagons -->
     <arg name="3d_sensor"  default="$(optenv TURTLEBOT_3D_SENSOR kinect)"/>  <!-- kinect, asus_xtion_pro -->
     
-    <arg name="map_file"       default="$(find demo4)/maps/maze.yaml"/> <!-- robopark_plan -->
-    <arg name="world_file"     default="$(find demo4)/maps/stage/maze.world"/>
-    <arg name="initial_pose_x" default="2.0"/>
-    <arg name="initial_pose_y" default="2.0"/>
+    <arg name="map_file"       default="$(find demo4)/maps/229.yaml"/> <!-- robopark_plan -->
+    <arg name="world_file"     default="$(find demo4)/maps/stage/229.world"/>
+    <arg name="initial_pose_x" default="-1.0132747494"/>
+    <arg name="initial_pose_y" default="-2.59178099819"/>
     <arg name="initial_pose_a" default="0.0"/>
 
     <arg name="mapping" default="false"/>
@@ -127,8 +127,8 @@
     
     <node pkg="rviz" type="rviz" name="rviz" args="-d $(find demo4)/simulation/world.rviz"/>
 
-    <!-- <include file="$(find demo4)/launch/misc/keyboard_teleop.launch"/> -->
-    <include file="$(find demo4)/launch/misc/logitech.launch"/>
+    <include file="$(find demo4)/launch/misc/keyboard_teleop.launch" if="$(eval mapping)"/>
+    <!-- <include file="$(find demo4)/launch/misc/logitech.launch"/> -->
 
     <node pkg="demo4" type="goal_publisher.py" name="goal_publisher" output="screen" if="$(eval not mapping)"/>
 </launch>

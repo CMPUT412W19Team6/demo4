@@ -48,43 +48,43 @@ if __name__ == "__main__":
 
     goal1 = MoveBaseGoal()
     goal1.target_pose.header.frame_id = "map"
-    goal1.target_pose.pose.position.x = 2.00076150894
-    goal1.target_pose.pose.position.y = 4.14177083969
+    goal1.target_pose.pose.position.x = 2.85780046115
+    goal1.target_pose.pose.position.y = 3.33461611734
     goal1.target_pose.pose.position.z = 0.0
     goal1.target_pose.pose.orientation.x = 0.0
     goal1.target_pose.pose.orientation.y = 0.0
-    goal1.target_pose.pose.orientation.z = -0.202602316939
-    goal1.target_pose.pose.orientation.w = 0.97926109959
+    goal1.target_pose.pose.orientation.z = -0.706489444944
+    goal1.target_pose.pose.orientation.w = 0.707723578937
 
     goal2 = MoveBaseGoal()
     goal2.target_pose.header.frame_id = "map"
-    goal2.target_pose.pose.position.x = 1.54405283928
-    goal2.target_pose.pose.position.y = 2.79850769043
+    goal2.target_pose.pose.position.x = 4.62429458697
+    goal2.target_pose.pose.position.y = 2.14827792834
     goal2.target_pose.pose.position.z = 0.0
     goal2.target_pose.pose.orientation.x = 0.0
     goal2.target_pose.pose.orientation.y = 0.0
-    goal2.target_pose.pose.orientation.z = 0
-    goal2.target_pose.pose.orientation.w = 1.0
+    goal2.target_pose.pose.orientation.z = -0.727832603828
+    goal2.target_pose.pose.orientation.w = 0.685754840162
 
     goal3 = MoveBaseGoal()
     goal3.target_pose.header.frame_id = "map"
-    goal3.target_pose.pose.position.x = 2.00076150894
-    goal3.target_pose.pose.position.y = 4.14177083969
+    goal3.target_pose.pose.position.x = 3.1799881838
+    goal3.target_pose.pose.position.y = 1.15643320677
     goal3.target_pose.pose.position.z = 0.0
     goal3.target_pose.pose.orientation.x = 0.0
     goal3.target_pose.pose.orientation.y = 0.0
-    goal3.target_pose.pose.orientation.z = -0.202602316939
-    goal3.target_pose.pose.orientation.w = 0.97926109959
+    goal3.target_pose.pose.orientation.z = -0.985318641925
+    goal3.target_pose.pose.orientation.w = 0.17072543418
 
     goal4 = MoveBaseGoal()
     goal4.target_pose.header.frame_id = "map"
-    goal4.target_pose.pose.position.x = 2.00076150894
-    goal4.target_pose.pose.position.y = 4.14177083969
+    goal4.target_pose.pose.position.x = 4.39842273542
+    goal4.target_pose.pose.position.y = 0.248438570084
     goal4.target_pose.pose.position.z = 0.0
     goal4.target_pose.pose.orientation.x = 0.0
     goal4.target_pose.pose.orientation.y = 0.0
-    goal4.target_pose.pose.orientation.z = -0.202602316939
-    goal4.target_pose.pose.orientation.w = 0.97926109959
+    goal4.target_pose.pose.orientation.z = 0.986414925415
+    goal4.target_pose.pose.orientation.w = 0.164272928135
 
     goal_dict = {
         "A": goal1,
